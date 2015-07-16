@@ -4,10 +4,6 @@
  *
  * Created on December 14, 2014, 1:28 AM
  */
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <string.h>
-//#include <stdint.h>
 #include <string>
 
 #include <amqp_ssl_socket.h>
@@ -16,7 +12,6 @@
 #include "reader.hpp"
 
 
-//#include <jsoncpp/json/json.h>
 #include <mongo/bson/bson.h>
 #include <mongo/client/dbclient.h>
 
@@ -26,47 +21,17 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-//#include <pthread.h>
 #include <boost/program_options.hpp>
 #include <boost/thread.hpp>
-//#include <boost/atomic.hpp>
 
 extern "C" {
 #include <signal.h>
 #include <libdaemon/dfork.h>
-//#include <libdaemon/dsignal.h>
 #include <libdaemon/dlog.h>
 #include <libdaemon/dpid.h>
 #include <libdaemon/dexec.h>
 }
 #define FORKDEBUG 1
-/*
-struct message {
-  message *next;
-  int count;
-  char data[1];  
-};
-struct thread_data{
-   int  thread_id;
-   int  sum;
-   char *message;
-};
-
-pthread_mutex_t mymutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t count_threshold_cv=PTHREAD_COND_INITIALIZER;
-pthread_t  th;
- */
-
-/*
- * 
-
-extern "C" void *WorkerReader(void *threadarg) {
-    pthread_mutex_lock(&mymutex);
-    std::cout << "---Hello " <<  std::endl;
-    pthread_cond_signal(&count_threshold_cv);
-    pthread_mutex_unlock(&mymutex);
-}
- */
 
 #ifdef FORKDEBUG
   extern "C" const char* pidFileStub(void) {
@@ -83,39 +48,6 @@ void printAcceptor::accept(char *message, int len) {
     std::cout << "Message:" << message << std::endl;
 }
 
-//struct theDaemonSync {
-
-//    boost::mutex quitmutex;
-//    boost::barrier inited;
-//    theDaemonSync();
-//};
-
-//theDaemonSync::theDaemonSync() : inited(2) {}
-
-/*
-class unlocker {
-    boost::barrier &barier;
-    bool lock;
-public:
-    void complete();
-    unlocker(boost::barrier &b);
-    ~unlocker();
-};
-void unlocker::complete() {
-    if(lock) {
-        lock=false;
-        barier.wait();
-    }
-}
-
-unlocker::unlocker(boost::barrier &b) : barier(b) {
-
-}
-
-unlocker::~unlocker() {
-    complete();
-}
-*/
 
 boost::condition_variable condSignal;
 boost::mutex              mutSignal;
@@ -287,7 +219,7 @@ int main(int argc, char **argv) {
     po::options_description desc("Allowed options");
     desc.add_options()
             ("help,h", "produce help message")
-            ("qhost,H", po::value<std::string>(&amq.hostname)->default_value("10.11.26.145"), "Rabbit MQ host name")
+            ("qhost,H", po::value<std::string>(&amq.hostname)->default_value("127.0.0.0"), "Rabbit MQ host name")
             ("qvhost,V", po::value<std::string>(&amq.vhost)->default_value("/"), "Rabbit MQ vhost")
             ("quser,U", po::value<std::string>(&amq.vhostuser)->default_value("guest"), "Rabbit MQ user")
             ("qpass,P", po::value<std::string>(&amq.vhostpass)->default_value("guest"), "Rabbit MQ password")

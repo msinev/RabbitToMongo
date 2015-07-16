@@ -12,7 +12,6 @@
 #include "reader.hpp"
 
 
-//#include <jsoncpp/json/json.h>
 #include <mongo/bson/bson.h>
 #include <mongo/client/dbclient.h>
 
