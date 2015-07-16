@@ -9,8 +9,8 @@ Portions are under MIT license (see inside util.*)
 
 Build system based on cmake
 
-Command line processing based on data
-
+#Command line option
+```
 Allowed options:
   -h [ --help ]                        produce help message
   -H [ --qhost ] arg (=127.0.0.0)      Rabbit MQ host name
@@ -36,3 +36,4 @@ Allowed options:
                                        UID
   -c [ --config ] [=arg(=/etc/reader)] Write config file
 
+```
